@@ -1,5 +1,6 @@
 package com.dedztbh.nlplearn
 
+import com.dedztbh.nlplearn.data.DoubleWord
 import kotlin.math.log2
 
 /**
@@ -8,28 +9,28 @@ import kotlin.math.log2
  */
 object StatMath {
     fun Psingle(word: String, raw: List<String>): Double {
-        return raw.count { it == word }.toDouble() / raw.size
+        val wordCnt = raw.count { it == word }
+        println("$word: $wordCnt/${raw.size}")
+        return wordCnt.toDouble() / raw.size
     }
 
-    fun Plist(words: List<String>, raw: List<String>, phraseCnt: Int): Double {
-        var successCnt = 0
-        for (i in 0 until raw.size - words.size + 1) {
-            if (raw.subList(i, i + words.size) == words) {
-                successCnt++
-            }
-        }
-        return successCnt.toDouble() / phraseCnt
-    }
+    fun Plist(phrase: DoubleWord, phraseCnt: Int): Double = phrase.freq.toDouble() / phraseCnt
 
-    fun MI(x: String, y: String, raw: List<String>, phraseCount: Int): Double {
-        val pxy = Plist(listOf(x, y), raw, phraseCount)
-        val px = Psingle(x, raw)
-        val py = Psingle(y, raw)
+    fun MI(phrase: DoubleWord, raw: List<String>, phraseCount: Int) =
+        phrase.run {
+            val pxy = Plist(this, phraseCount)
+            val px = Psingle(first, raw)
+            val py = Psingle(second, raw)
+//        println("$first$second MI")
+//        println(phraseCount)
 //        println(pxy)
 //        println(px)
 //        println(py)
-        return log2(pxy / (px * py))
-    }
+//        println(pxy / (px * py))
+//        println(log2(pxy / (px * py)))
+
+            pxy * log2(pxy / (px * py)) * phraseCount
+        }
 
     fun Pe(count: Int, totalCount: Int): Double = count.toDouble() / totalCount
 
@@ -56,7 +57,7 @@ object StatMath {
         var totalCnt = 0
         for (i in 0 until raw.size - words.size) {
             if (raw.subList(i, i + words.size) == words) {
-                foundMap.incByKey(raw[i + 1])
+                foundMap.incByKey(raw[i + words.size])
                 totalCnt++
             }
         }

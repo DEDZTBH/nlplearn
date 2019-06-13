@@ -52,11 +52,13 @@ class MIE {
 
             val totalPhraseCount = wordsStat.first.totalPhraseCount()
             wordsStat.first.forEach {
-                it.MI = MI(it.first, it.second, wordsStat.second, totalPhraseCount)
+                it.MI = MI(it, wordsStat.second, totalPhraseCount)
                 it.LE = LE(listOf(it.first, it.second), wordsStat.second)
                 it.RE = RE(listOf(it.first, it.second), wordsStat.second)
             }
-            wordsStat.first
+            wordsStat.first.sortedByDescending {
+                it.MI + it.LE + it.RE
+            }.subList(0, 5)
         }.let {
             println(it)
             Unit
