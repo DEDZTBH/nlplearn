@@ -15,7 +15,6 @@ repositories {
 dependencies {
     compile group: 'com.hankcs', name: 'hanlp', version: 'portable-1.7.3'
     compile group: 'com.google.guava', name: 'guava', version: '27.1-jre'
-    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
