@@ -21,7 +21,7 @@ fun main() {
 }
 
 class MIE {
-    val text = listOf(javaClass.getResource("text.txt").readText())
+    val text = javaClass.getResource("text.txt").readText().let { listOf(it) }
     val stopNatures = setOf(Nature.uj, Nature.w)
     val stopWords = javaClass.getResource("stop.txt").readText().split("\n")
     val breakWords = setOf("。", "；", "\n")

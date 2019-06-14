@@ -17,7 +17,7 @@ data class DoubleWord(
     var RE = 0.0
     fun inc() = freq++
     override fun toString(): String {
-        return "$first $second tf=$freq MI=$MI LE=$LE RE=$RE\n"
+        return "$first$second tf=$freq MI=${MI.format()} LE=${LE.format()} RE=${RE.format()}\n"
     }
 }
 
@@ -26,3 +26,5 @@ fun PhraseStats.totalPhraseCount(): Int {
     forEach { cnt += it.freq }
     return cnt
 }
+
+fun Double.format(digits: Int = 2) = java.lang.String.format("%.${digits}f", this)

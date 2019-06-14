@@ -10,7 +10,7 @@ import kotlin.math.log2
 object StatMath {
     fun Psingle(word: String, raw: List<String>): Double {
         val wordCnt = raw.count { it == word }
-        println("$word: $wordCnt/${raw.size}")
+//        println("$word: $wordCnt/${raw.size}")
         return wordCnt.toDouble() / raw.size
     }
 
@@ -63,11 +63,11 @@ object StatMath {
         }
         var sum = 0.0
         foundMap.keys.forEach { k ->
-            sum += Pe(foundMap[k]!!, totalCnt).let { P ->
+            sum -= Pe(foundMap[k]!!, totalCnt).let { P ->
                 P * log2(P)
             }
         }
-        return -sum
+        return sum
     }
 }
 
